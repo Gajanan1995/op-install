@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.serviceMesh.name }}
   namespace: {{ .Values.serviceMesh.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: {{ .Values.serviceMesh.channel }}
   installPlanApproval: {{ .Values.serviceMesh.installPlanApproval }}
