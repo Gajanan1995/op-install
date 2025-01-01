@@ -8,3 +8,27 @@ serviceMesh:
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+
+kiali:
+  name: kiali-ossm
+  namespace: openshift-operators
+  channel: candidate
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+
+elasticSearch:
+  name: elasticsearch-operator
+  namespace: openshift-operators-redhat
+  channel: stable-5.8
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+
+jaeger:
+  name: jaeger-product
+  namespace: openshift-distributed-tracing
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
