@@ -27,8 +27,9 @@ elasticSearch:
 
 jaeger:
   name: jaeger-product
-  namespace: openshift-distributed-tracing
+  namespace: openshift-distributed-tracing 
+  channel: stable
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: stable
+
