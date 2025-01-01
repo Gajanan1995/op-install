@@ -1,0 +1,10 @@
+# Default values for op-install.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+serviceMesh:
+  name: servicemeshoperator
+  namespace: openshift-operators
+  channel: stable
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
