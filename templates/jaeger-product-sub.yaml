@@ -1,14 +1,13 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: {{ .Values.jaeger.name }}
-  namespace: {{ .Values.jaeger.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
+  name: {{ .Values.jaeger.name }}
+  namespace: {{ .Values.jaeger.namespace }}
 spec:
   channel: {{ .Values.jaeger.channel }}
   installPlanApproval: {{ .Values.jaeger.installPlanApproval }}
   name: {{ .Values.jaeger.name }}
   source: {{ .Values.jaeger.source }}
   sourceNamespace: {{ .Values.jaeger.sourceNamespace }}
-
