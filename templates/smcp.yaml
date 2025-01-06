@@ -7,9 +7,8 @@ metadata:
   annotations:
       argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
       argocd.argoproj.io/sync-wave: "4"
-spec:
-
-spec:
+spec: 
+  version: {{ $.Values.serviceMesh.controlPlane.version }}
   addons:
     jaeger:
       name: jaeger-prod
@@ -121,5 +120,4 @@ spec:
   tracing:
     sampling: {{ $.Values.serviceMesh.controlPlane.sampling }} 
     type: Jaeger
-  version: {{ $.Values.serviceMesh.controlPlane.version }}
-
+{{- end }}

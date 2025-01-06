@@ -9,14 +9,13 @@ serviceMesh:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   controlPlane:
-    namespace: 
-	- web-app
-	- smcp-app
-	- mesh-app
+    namespaces:
+      - web-app
+      - smcp-app
+      - mesh-app
     version: v2.6
     sampling: 100
     mode: MultiTenant
-
 kiali:
   name: kiali-ossm
   namespace: openshift-operators
