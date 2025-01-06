@@ -1,0 +1,125 @@
+{{- range .Values.serviceMesh.controlPlane.namespaces }}
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: basic
+  namespace: {{ . }}
+  annotations:
+      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+      argocd.argoproj.io/sync-wave: "4"
+spec:
+
+spec:
+  addons:
+    jaeger:
+      name: jaeger-prod
+    kiali:
+      enabled: true
+      install:
+        dashboard:
+          enableGrafana: false
+          enablePrometheus: true
+          enableTracing: true
+          viewOnly: true
+        deployment:
+          nodeSelector:
+            node-role.kubernetes.io/worker: ""
+          tolerations:
+          - effect: NoSchedule
+            key: worker
+            value: reserved
+          - effect: NoExecute
+            key: worker
+            value: reserved
+      name: kiali
+  gateways:
+    egress:
+      runtime:
+        deployment:
+          autoScaling:
+            enabled: true
+      service: {}
+    ingress:
+      runtime:
+        deployment:
+          autoScaling:
+            enabled: true
+            maxReplicas: 9
+            minReplicas: 3
+      service: {}
+    openshiftRoute:
+      enabled: false
+  mode: {{ $.Values.serviceMesh.controlPlane.mode }}
+  policy:
+    type: Istiod
+  profiles:
+  - default
+  proxy:
+    injection:
+      autoInject: true
+    runtime:
+      container:
+        resources:
+          limits:
+            cpu: 300m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+  runtime:
+    components:
+      grafana:
+        container:
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi
+      jaeger:
+        container:
+          resources:
+            limits:
+              cpu: 500m
+              memory: 750Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
+      kiali:
+        container:
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+      pilot:
+        container:
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
+      prometheus:
+        container:
+          resources:
+            limits:
+              cpu: 500m
+              memory: 10Gi
+            requests:
+              cpu: 100m
+              memory: 1Gi
+  security:
+    dataPlane:
+      mtls: true
+  telemetry:
+   type: Istiod
+  tracing:
+    sampling: {{ $.Values.serviceMesh.controlPlane.sampling }} 
+    type: Jaeger
+  version: {{ $.Values.serviceMesh.controlPlane.version }}
+
