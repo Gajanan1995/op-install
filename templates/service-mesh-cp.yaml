@@ -5,16 +5,18 @@ metadata:
   name: basic
   namespace: {{ . }}
   annotations:
-      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-      argocd.argoproj.io/sync-wave: "4"
-spec: 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "4"
+spec:
   version: {{ $.Values.serviceMesh.controlPlane.version }}
+  mode: {{ $.Values.serviceMesh.controlPlane.mode }}
   addons:
-    jaeger:
+    jaegerInstall:
       name: jaeger-prod
-    kiali:
+    kialiInstall:
       enabled: true
-      install:
+      name: kiali
+      spec:
         dashboard:
           enableGrafana: false
           enablePrometheus: true
@@ -30,7 +32,6 @@ spec:
           - effect: NoExecute
             key: worker
             value: reserved
-      name: kiali
   gateways:
     egress:
       runtime:
@@ -48,11 +49,6 @@ spec:
       service: {}
     openshiftRoute:
       enabled: false
-  mode: {{ $.Values.serviceMesh.controlPlane.mode }}
-  policy:
-    type: Istiod
-  profiles:
-  - default
   proxy:
     injection:
       autoInject: true
@@ -116,8 +112,8 @@ spec:
     dataPlane:
       mtls: true
   telemetry:
-   type: Istiod
+    type: Istiod
   tracing:
-    sampling: {{ $.Values.serviceMesh.controlPlane.sampling }} 
+    sampling: {{ $.Values.serviceMesh.controlPlane.sampling }}
     type: Jaeger
 {{- end }}
