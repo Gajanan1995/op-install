@@ -1,0 +1,9 @@
+{{- range .Values.serviceMesh.controlPlane.namespaces }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+{{- end }}
+
