@@ -1,0 +1,9 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ .Values.tempo.name }}-og
+  namespace: {{ .Values.tempo.namespace }}
+  annotations:
+    olm.providedAPIs: "TempoMonolithic.v1alpha1.tempo.grafana.com,TempoStack.v1alpha1.tempo.grafana.com"
+spec:
+  upgradeStrategy: Default

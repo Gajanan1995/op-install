@@ -1,0 +1,18 @@
+{{- if not (lookup "operators.coreos.com/v1alpha1" "Subscription" .Values.tempo.namespace .Values.tempo.name) }}
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ .Values.tempo.name }}
+  namespace: {{ .Values.tempo.namespace }}
+  annotations:
+    "helm.sh/hook": pre-install, pre-upgrade
+    "helm.sh/hook-weight": "1"
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  channel: {{ .Values.tempo.channel }}
+  installPlanApproval: {{ .Values.tempo.installPlanApproval }}
+  name: {{ .Values.tempo.name }}
+  source: {{ .Values.tempo.source }}
+  sourceNamespace: {{ .Values.tempo.sourceNamespace }}
+{{- end }}
+

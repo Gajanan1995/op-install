@@ -33,3 +33,10 @@ jaeger:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 
+tempo:
+  channel: stable
+  installPlanApproval: Automatic
+  name: tempo-product
+  namespace: openshift-tempo-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
