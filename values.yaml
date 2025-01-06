@@ -13,7 +13,7 @@ serviceMesh:
       - web-app
       - smcp-app
       - mesh-app
-    version: v2.6
+    version: "v2.6"
     sampling: 100
     mode: MultiTenant
 kiali:
